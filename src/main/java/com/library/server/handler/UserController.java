@@ -2,11 +2,13 @@ package com.library.server.handler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,35 +28,37 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> addNewUser (@RequestParam String name, @RequestParam Short sex, @RequestParam String phone, @RequestParam String password) {
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> addUser (@RequestParam String name,
+	@RequestParam Integer sex, @RequestParam String phone, @RequestParam String password) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		User user = new User();
-		user.setName(name);
 		if (sex != Constant.SexNo && sex != Constant.SexMale && sex != Constant.SexFemale) {
 			map.put(Constant.Status, Constant.Bad_Request);
 			return map;
 		}
-		user.setSex(sex);
 		if (!Checker.isPhone(phone)) {
 			map.put(Constant.Status, Constant.Bad_Request);
 			return map;
 		}
-		user.setPhone(phone);
-		if (userRepository.findByPhone(user.getPhone()) != null) {
+		if (userRepository.findByPhone(phone) != null) {
 			map.put(Constant.Status, Constant.Repeated);
 			return map;
 		}
-		user.setPassword(MD5.GetMD5Code(password));
+		User user = new User(name, sex, phone, MD5.GetMD5Code(password));
 		user.setIsAdmin(Constant.NormalUser);
+		user.setAmount(0);
 		userRepository.save(user);
 		map.put(Constant.Status, Constant.HTTP_OK);
 		return map;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> deleteUser (@RequestParam Long id) {
+	public @ResponseBody Map<String, Object> deleteUser (@RequestParam Long id, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		if ((Integer)request.getSession().getAttribute(Constant.IsAdmin) != Constant.AdminUser) {
+			map.put(Constant.Status, Constant.Permission_Denied);
+			return map;
+		}
 		userRepository.deleteById(id);
 		map.put(Constant.Status, Constant.HTTP_OK);
 		return map;
@@ -63,24 +67,39 @@ public class UserController {
 	@RequestMapping(value = "/getbyname", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getUsersByName (@RequestParam String name, @RequestParam int page) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(Constant.Status, Constant.HTTP_OK);
-		map.put(Constant.Body, userRepository.findUserByName(name, new PageRequest(page-1, Constant.Page_Size)));
+		Page<User> users = userRepository.findUserByName(name, new PageRequest(page-1, Constant.Page_Size));
+		if (users != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			map.put(Constant.Body, users);
+			return map;
+		}
+		map.put(Constant.Status, Constant.User_Not_Found);
 		return map;
 	}
 
 	@RequestMapping(value = "/getbyid", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getUsersById (@RequestParam Long id) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(Constant.Status, Constant.HTTP_OK);
-		map.put(Constant.Body, userRepository.findById(id));
+		Optional<User> user = userRepository.findById(id);
+		if (user != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			map.put(Constant.Body, user);
+			return map;
+		}
+		map.put(Constant.Status, Constant.User_Not_Found);
 		return map;
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getAllUsers(@RequestParam int page) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(Constant.Status, Constant.HTTP_OK);
-		map.put(Constant.Body, userRepository.findAll(new PageRequest(page-1, Constant.Page_Size)));
+		Page<User> users = userRepository.findAll(new PageRequest(page-1, Constant.Page_Size));
+		if (users != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			map.put(Constant.Body, users);
+			return map;
+		}
+		map.put(Constant.Status, Constant.User_Not_Found);
 		return map;
 	}
 
@@ -93,7 +112,7 @@ public class UserController {
 		}
 		User user = userRepository.findByPhone(phone);
 		if (user == null) {
-			map.put(Constant.Status, Constant.Login_Fail);
+			map.put(Constant.Status, Constant.User_Not_Found);
 			return map;
 		}
 		if (!user.getPassword().equals(MD5.GetMD5Code(password))) {
@@ -104,6 +123,7 @@ public class UserController {
 		session.setAttribute(Constant.Name, user.getName());
 		session.setAttribute(Constant.Phone, user.getPhone());
 		session.setAttribute(Constant.IsAdmin, user.getIsAdmin());
+		session.setAttribute(Constant.Amount, user.getAmount());
 		map.put(Constant.Status, Constant.HTTP_OK);
 		return map;
 	}
@@ -114,33 +134,8 @@ public class UserController {
 		request.getSession().removeAttribute(Constant.Name);
 		request.getSession().removeAttribute(Constant.Phone);
 		request.getSession().removeAttribute(Constant.IsAdmin);
+		request.getSession().removeAttribute(Constant.Amount);
 		map.put(Constant.Status, Constant.HTTP_OK);
-		return map;
-	}
-
-	@RequestMapping(value = "/getname", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getUserType(HttpServletRequest request){
-		Map<String, Object> map = new HashMap<String, Object>();
-		String name = (String)request.getSession().getAttribute(Constant.Name);
-		if (name != null) {
-			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, name);
-			return map;
-		}
-		map.put(Constant.Status, Constant.Not_Login);
-		return map;
-	}
-
-	@RequestMapping(value = "/gettype", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getUserName(HttpServletRequest request){
-		Map<String, Object> map = new HashMap<String, Object>();
-		Short isAdmin = (Short)request.getSession().getAttribute(Constant.IsAdmin);
-		if (isAdmin != null) {
-			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, isAdmin);
-			return map;
-		}
-		map.put(Constant.Status, Constant.Not_Login);
 		return map;
 	}
 }

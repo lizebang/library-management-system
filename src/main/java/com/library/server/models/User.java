@@ -8,28 +8,29 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 
 	private String name;
 
-	private Short sex;
+	private Integer sex;
 
 	private String phone;
 
 	private String password;
 
-	private Short isAdmin;
+	private Integer isAdmin;
+
+	private Integer amount;
 
 	public User() {
 	}
 
-	public User(String name, Short sex, String phone, String password, Short isAdmin) {
+	public User(String name, Integer sex, String phone, String password) {
 		this.name = name;
 		this.sex = sex;
 		this.phone = phone;
 		this.password = password;
-		this.isAdmin = isAdmin;
 	}
 
 	public Long getId() {
@@ -48,11 +49,11 @@ public class User {
 		this.name = name;
 	}
 
-	public Short getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(Short sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -72,11 +73,19 @@ public class User {
 		this.password = password;
 	}
 
-	public Short getIsAdmin() {
+	public Integer getIsAdmin() {
 		return isAdmin;
 	}
 
-	public void setIsAdmin(Short isAdmin) {
+	public void setIsAdmin(Integer isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 }
