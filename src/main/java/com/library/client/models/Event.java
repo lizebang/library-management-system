@@ -1,18 +1,7 @@
-package com.library.server.models;
+package com.library.client.models;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 public class Event {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	public final static String EventId = "id";
 
@@ -25,7 +14,8 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(String phone, String isbn) {
+	public Event(Long id, String phone, String isbn) {
+		this.id = id;
 		this.phone = phone;
 		this.isbn = isbn;
 	}
@@ -53,13 +43,5 @@ public class Event {
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
-	}
-
-	public Map<String, Object> toMap() {
-		Map<String, Object> map = new HashMap<>();
-		map.put(EventId, id);
-		map.put(EventPhone, phone);
-		map.put(EventIsbn, isbn);
-		return map;
 	}
 }

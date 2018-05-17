@@ -1,10 +1,6 @@
-package com.library.server;
+package com.library.client;
 
 public class Constant {
-
-	// Timeout
-	public final static Integer Connect_Timeout = 60;
-	public final static Integer Read_Timeout = 60;
 
 	// ResponseBody
 	public final static String Status = "status";

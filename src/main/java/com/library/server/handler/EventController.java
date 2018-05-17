@@ -22,6 +22,7 @@ import com.library.server.models.UserRepository;
 @Controller
 @RequestMapping(path="/event")
 public class EventController {
+
 	@Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -31,30 +32,36 @@ public class EventController {
 
 	@RequestMapping(value = "/borrow", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> borrowBook (@RequestParam String isbn, HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        
         String phone = (String)request.getSession().getAttribute(Constant.Phone);
-        if (phone == null) {
+        if (phone.equals(null)) {
             map.put(Constant.Status, Constant.Not_Login);
             return map;
         }
+        
         Integer amount = (Integer)request.getSession().getAttribute(Constant.Amount);
         if (Constant.Max_Margin - amount == 0) {
             map.put(Constant.Status, Constant.No_Margin);
             return map;
         }
+        
         Book book = bookRepository.findByIsbn(isbn);
-		if (book.getInventory() == 0) {
+		if (book.getInventory().equals(0)) {
 			map.put(Constant.Status, Constant.Zore_Inventory);
 			return map;
         }
+        
         int bookUpdateTimes = bookRepository.updateInventory(book.getInventory()-1, book.getIsbn());
         int userUpdateTimes = userRepository.updateAmount(amount+1, phone);
         if (bookUpdateTimes != userUpdateTimes) {
             map.put(Constant.Status, Constant.Error_Borrow);
             return map;
         }
+        
         eventRepository.save(new Event(phone, isbn));
         request.getSession().setAttribute(Constant.Amount, amount+1);
+        
         map.put(Constant.Status, Constant.HTTP_OK);
     	return map;
     }
@@ -62,21 +69,27 @@ public class EventController {
     @RequestMapping(value = "/return", method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> returnBook(@RequestParam String isbn, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
+        
         String phone = (String)request.getSession().getAttribute(Constant.Phone);
-        if (phone == null) {
+        if (phone.equals(null)) {
             map.put(Constant.Status, Constant.Not_Login);
             return map;
         }
+        
         Integer amount = (Integer)request.getSession().getAttribute(Constant.Amount);
+        
         Book book = bookRepository.findByIsbn(isbn);        
+        
         int bookUpdateTimes = bookRepository.updateInventory(book.getInventory()+1, book.getIsbn());
         int userUpdateTimes = userRepository.updateAmount(amount-1, phone);
         if (bookUpdateTimes != userUpdateTimes) {
             map.put(Constant.Status, Constant.Error_Return);
             return map;
         }
+        
         eventRepository.deleteByPhoneAndIsbn(phone, isbn);
         request.getSession().setAttribute(Constant.Amount, amount-1);
+        
         map.put(Constant.Status, Constant.HTTP_OK);
         return map;
     }

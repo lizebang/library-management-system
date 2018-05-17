@@ -1,17 +1,7 @@
-package com.library.server.models;
+package com.library.client.models;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Book {
 
-	@Id
-	@GeneratedValue
 	private Long id;
 	public final static String BookId = "id";
 
@@ -42,7 +32,8 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String isbn, String mark, String name, String tag,  String author,  String introduction, Integer amount, Integer inventory) {
+	public Book(Long id, String isbn, String mark, String name, String tag,  String author,  String introduction, Integer amount, Integer inventory) {
+		this.id = id;
 		this.isbn = isbn;
 		this.mark = mark;
 		this.name = name;
@@ -123,21 +114,5 @@ public class Book {
 
 	public void setInventory(Integer inventory) {
 		this.inventory = inventory;
-	}
-
-	public Map<String, Object> toMap() {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put(BookId, id);
-		map.put(BookIsbn, isbn);
-		map.put(BookMark, mark);
-		map.put(BookName, name);
-		map.put(BookTag, tag);
-		map.put(BookAuthor, author);
-		map.put(BookIntroduction, introduction);
-		map.put(BookAmount, amount);
-		map.put(BookInventory, inventory);
-		
-		return map;
 	}
 }
