@@ -35,7 +35,7 @@ public class EventController {
         Map<String, Object> map = new HashMap<String, Object>();
         
         String phone = (String)request.getSession().getAttribute(Constant.Phone);
-        if (phone.equals(null)) {
+        if (phone == null) {
             map.put(Constant.Status, Constant.Not_Login);
             return map;
         }
@@ -71,7 +71,7 @@ public class EventController {
         Map<String, Object> map = new HashMap<String, Object>();
         
         String phone = (String)request.getSession().getAttribute(Constant.Phone);
-        if (phone.equals(null)) {
+        if (phone == null) {
             map.put(Constant.Status, Constant.Not_Login);
             return map;
         }

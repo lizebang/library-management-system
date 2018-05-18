@@ -2,6 +2,9 @@ package com.library.server;
 
 public class Constant {
 
+	// Reset
+	public final static String ResetPassword = "123456";
+
 	// Timeout
 	public final static Integer Connect_Timeout = 60;
 	public final static Integer Read_Timeout = 60;

@@ -10,6 +10,7 @@ public class URL {
 	// User
 	public final static String HTTP_User = "/user";
 	public final static String User_Add = "/add";
+	public final static String User_Reset = "/reset";
 	public final static String User_Delete = "/delete";
 	public final static String User_GetByName = "/getbyname";
 	public final static String User_GetById = "/getbyid";

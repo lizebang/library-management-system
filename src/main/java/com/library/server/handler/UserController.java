@@ -60,6 +60,27 @@ public class UserController {
 		return map;
 	}
 
+	@RequestMapping(value = "/reset", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> resetUser (@RequestParam String name, @RequestParam String phone, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		User user = userRepository.findByPhone(phone);
+		if (user == null) {
+			map.put(Constant.Status, Constant.User_Not_Found);
+			return map;
+		}
+
+		if (!user.getName().equals(name)) {
+			map.put(Constant.Status, Constant.User_Not_Found);
+			return map;
+		}
+
+		userRepository.updatePassword(MD5.GetMD5Code(Constant.ResetPassword), phone);
+
+		map.put(Constant.Status, Constant.HTTP_OK);
+		return map;
+	}
+
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> deleteUser (@RequestParam Long id, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -134,7 +155,7 @@ public class UserController {
 		}
 		
 		User user = userRepository.findByPhone(phone);
-		if (user.equals(null)) {
+		if (user == null) {
 			map.put(Constant.Status, Constant.User_Not_Found);
 			return map;
 		}

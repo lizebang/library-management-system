@@ -17,6 +17,16 @@ public class Constant {
 	public final static Integer SexMale = 1;
 	public final static Integer SexFemale = 2;
 
+	public final static String getSex(Integer sex) {
+		if (sex.equals(SexMale)) {
+			return "男";
+		}
+		if (sex.equals(SexFemale)) {
+			return "女";
+		}
+		return "保密";
+	}
+
 	// Is Admin
 	public final static Integer NormalUser = 1;
 	public final static Integer AdminUser = 2;

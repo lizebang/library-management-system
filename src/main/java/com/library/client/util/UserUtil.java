@@ -19,7 +19,30 @@ public class UserUtil {
         map.put(User.UserPhone, phone);
         map.put(User.UserPassword, password);
 
-        String resp = new HttpRequest(URL.getURL(URL.HTTP_User, URL.User_Add),HttpRequest.METHOD_POST)
+        String resp = new HttpRequest(URL.getURL(URL.HTTP_User, URL.User_Add), HttpRequest.METHOD_POST)
+        .form(map).connectTimeout(URL.Timeout).readTimeout(URL.Timeout).body();
+
+        JSONObject json;
+        try {
+            json = new JSONObject(resp);
+            Integer status = json.getInt(Constant.Status);
+            if (!status.equals(Constant.HTTP_OK)) {
+                throw new LibraryException(status);
+            } else {
+                return status;
+            }
+        }
+        catch (JSONException e) {
+            throw e;
+        }
+    }
+
+    public final static Integer resetPassword(String name, String phone) throws JSONException, LibraryException {
+        Map map = new HashMap();
+        map.put(User.UserName, name);
+        map.put(User.UserPhone, phone);
+
+        String resp = new HttpRequest(URL.getURL(URL.HTTP_User, URL.User_Reset), HttpRequest.METHOD_POST)
         .form(map).connectTimeout(URL.Timeout).readTimeout(URL.Timeout).body();
 
         JSONObject json;
@@ -42,7 +65,7 @@ public class UserUtil {
         map.put(User.UserPhone, phone);
         map.put(User.UserPassword, password);
 
-        String resp = new HttpRequest(URL.getURL(URL.HTTP_User, URL.User_Login),HttpRequest.METHOD_POST)
+        String resp = new HttpRequest(URL.getURL(URL.HTTP_User, URL.User_Login), HttpRequest.METHOD_POST)
         .form(map).connectTimeout(URL.Timeout).readTimeout(URL.Timeout).body();
 
         JSONObject json;

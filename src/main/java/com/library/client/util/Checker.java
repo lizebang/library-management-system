@@ -1,4 +1,4 @@
-package com.library.server.util;
+package com.library.client.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

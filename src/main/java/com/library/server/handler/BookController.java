@@ -88,6 +88,36 @@ public class BookController {
 		return map;
 	}
 
+	@RequestMapping(value = "/getbyauthor", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getByAuthor(@RequestParam String author, @RequestParam Integer page) {
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		Page<Book> books = bookRepository.findByAuthor(author, new PageRequest(page-1, Constant.Page_Size));
+		if (books != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			map.put(Constant.Body, books);
+			return map;
+		}
+
+		map.put(Constant.Status, Constant.Book_Not_Found);
+		return map;
+	}
+
+	@RequestMapping(value = "/getbytag", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getByTag(@RequestParam String tag, @RequestParam Integer page) {
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		Page<Book> books = bookRepository.findByTag(tag, new PageRequest(page-1, Constant.Page_Size));
+		if (books != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			map.put(Constant.Body, books);
+			return map;
+		}
+
+		map.put(Constant.Status, Constant.Book_Not_Found);
+		return map;
+	}
+
 	@RequestMapping(value = "/getbykeyword", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getByKeyword(@RequestParam String keyword, @RequestParam Integer page) {
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -13,11 +13,15 @@ public interface BookRepository extends CrudRepository<Book, String> {
     
     Book findByIsbn(String isbn);
 
+    Page<Book> findByTag(String tag, Pageable page);
+
+    Page<Book> findByAuthor(String author, Pageable page);
+
     @Query(value = "SELECT * FROM book WHERE isbn = ?1 OR name = ?1 OR author = ?1",
     nativeQuery = true)
     Page<Book> findByKeyword(String keyword, Pageable page);
 
-    @Query(value = "SELECT * FROM book WHERE isbn LIKE %?1% OR name LIKE %?1% OR author LIKE %?1%",
+    @Query(value = "SELECT * FROM book WHERE isbn LIKE %?1% OR name LIKE %?1% OR author LIKE %?1% OR tag LIKE %?1%",
     nativeQuery = true)
     Page<Book> findFuzzy(String keyword, Pageable page);
 
