@@ -59,7 +59,7 @@ public class EventController {
             return map;
         }
         
-        eventRepository.save(new Event(phone, isbn));
+        eventRepository.save(new Event(phone, isbn, book.getName(), book.getTag(), book.getAuthor()));
         request.getSession().setAttribute(Constant.Amount, amount+1);
         
         map.put(Constant.Status, Constant.HTTP_OK);

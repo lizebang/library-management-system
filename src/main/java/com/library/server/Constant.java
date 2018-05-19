@@ -51,7 +51,7 @@ public class Constant {
 	public final static Integer Book_Not_Found = 801;
 
 	// User Status 900
-	public final static Integer Login_Fail = 900;
+	public final static Integer Wrong_Password = 900;
 	public final static Integer User_Not_Found = 901;
 	public final static Integer Not_Login = 902;
 	public final static Integer Permission_Denied = 903;

@@ -24,6 +24,16 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	@Transactional
     @Modifying
+    @Query("UPDATE User u SET u.name = ?1, u.sex = ?2 WHERE u.phone = ?3")
+	int updateInfo(String name, Integer sex, String phone);
+
+	@Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.phone = ?1 WHERE u.phone = ?2")
+	int updatePhone(String newPhone, String oldPhone);
+
+	@Transactional
+    @Modifying
     @Query("UPDATE User u SET u.password = ?1 WHERE u.phone = ?2")
-    int updatePassword(String password, String phone);
+	int updatePassword(String password, String phone);
 }

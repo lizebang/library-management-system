@@ -77,6 +77,89 @@ public class UserController {
 
 		userRepository.updatePassword(MD5.GetMD5Code(Constant.ResetPassword), phone);
 
+		request.getSession().removeAttribute(Constant.Name);
+		request.getSession().removeAttribute(Constant.Phone);
+		request.getSession().removeAttribute(Constant.IsAdmin);
+		request.getSession().removeAttribute(Constant.Amount);
+
+		map.put(Constant.Status, Constant.HTTP_OK);
+		return map;
+	}
+
+	@RequestMapping(value = "/changeinfo", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> changeInfo (@RequestParam String name, @RequestParam Integer sex, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if (sex != Constant.SexNo && sex != Constant.SexMale && sex != Constant.SexFemale) {
+			map.put(Constant.Status, Constant.Bad_Request);
+			return map;
+		}
+
+		String phone = (String)request.getSession().getAttribute(Constant.Phone);
+		if (phone == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+
+		userRepository.updateInfo(name, sex, phone);
+
+		request.getSession().setAttribute(Constant.Name, name);
+
+		map.put(Constant.Status, Constant.HTTP_OK);
+		return map;
+	}
+
+	@RequestMapping(value = "/changephone", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> changePhone (@RequestParam String newPhone, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String phone = (String)request.getSession().getAttribute(Constant.Phone);
+		if (phone == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+
+		if (!Checker.isPhone(newPhone)) {
+			map.put(Constant.Status, Constant.Bad_Request);
+			return map;
+		}
+
+		if (userRepository.findByPhone(newPhone) != null) {
+			map.put(Constant.Status, Constant.Repeated);
+			return map;
+		}
+
+		userRepository.updatePhone(newPhone, phone);
+
+		request.getSession().setAttribute(Constant.Phone, newPhone);
+
+		map.put(Constant.Status, Constant.HTTP_OK);
+		return map;
+	}
+
+	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> changePassword (@RequestParam String oldPassword, @RequestParam String newPassword, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String phone = (String)request.getSession().getAttribute(Constant.Phone);
+		if (phone == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+
+		User user = userRepository.findByPhone(phone);
+		if (!MD5.GetMD5Code(oldPassword).equals(user.getPassword())) {
+			map.put(Constant.Status, Constant.Wrong_Password);
+			return map;
+		}
+
+		userRepository.updatePassword(MD5.GetMD5Code(newPassword), phone);
+
+		request.getSession().removeAttribute(Constant.Name);
+		request.getSession().removeAttribute(Constant.Phone);
+		request.getSession().removeAttribute(Constant.IsAdmin);
+		request.getSession().removeAttribute(Constant.Amount);
+
 		map.put(Constant.Status, Constant.HTTP_OK);
 		return map;
 	}
@@ -85,7 +168,12 @@ public class UserController {
 	public @ResponseBody Map<String, Object> deleteUser (@RequestParam Long id, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if ((Integer)request.getSession().getAttribute(Constant.IsAdmin) != Constant.AdminUser) {
+		Integer isAdmin = (Integer)request.getSession().getAttribute(Constant.IsAdmin);
+		if (isAdmin == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+		if (isAdmin != Constant.AdminUser) {
 			map.put(Constant.Status, Constant.Permission_Denied);
 			return map;
 		}
@@ -161,7 +249,7 @@ public class UserController {
 		}
 		
 		if (!user.getPassword().equals(MD5.GetMD5Code(password))) {
-			map.put(Constant.Status, Constant.Login_Fail);
+			map.put(Constant.Status, Constant.Wrong_Password);
 			return map;
 		}
 		

@@ -32,7 +32,12 @@ public class BookController {
 	@RequestParam Integer amount, @RequestParam Integer inventory, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
-		if ((Integer)request.getSession().getAttribute(Constant.IsAdmin) != Constant.AdminUser) {
+		Integer isAdmin = (Integer)request.getSession().getAttribute(Constant.IsAdmin);
+		if (isAdmin == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+		if (isAdmin != Constant.AdminUser) {
 			map.put(Constant.Status, Constant.Permission_Denied);
 			return map;
 		}
@@ -62,7 +67,12 @@ public class BookController {
 	public @ResponseBody Map<String, Object> deleteBook(@RequestParam String isbn, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
-		if ((Integer)request.getSession().getAttribute(Constant.IsAdmin) != Constant.AdminUser) {
+		Integer isAdmin = (Integer)request.getSession().getAttribute(Constant.IsAdmin);
+		if (isAdmin == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+            return map;
+		}
+		if (isAdmin != Constant.AdminUser) {
 			map.put(Constant.Status, Constant.Permission_Denied);
 			return map;
 		}
