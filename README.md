@@ -28,7 +28,7 @@ CREATE DATABASE IF NOT EXISTS `library`;
 
 ### run server
 
-本目录下执行
+在 `server` 目录下执行
 
 ```shell
 ./gradlew bootRun
@@ -37,13 +37,13 @@ CREATE DATABASE IF NOT EXISTS `library`;
 也可以打包成 `jar`
 
 ```shell
-./gradlew build
+./gradlew build && java -jar build/libs/server-0.0.1-SNAPSHOT.jar
 ```
 
 ### run client
 
-在 `src/main/java` 目录下执行
+在 `client` 目录下执行
 
 ```shell
-find . -name "*\.class" | xargs rm -f && javac -classpath "." com/library/client/Application.java && java com.library.client.Application
+mvn package && java -jar target/client-0.0.1-SNAPSHOT.jar
 ```
