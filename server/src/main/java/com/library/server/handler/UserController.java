@@ -191,7 +191,12 @@ public class UserController {
 		Page<User> users = userRepository.findUserByName(name, new PageRequest(page-1, Constant.Page_Size));
 		if (users != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, users);
+			List<Object> objects = new ArrayList<Object>();
+			for (User user : users) {
+				objects.add(user.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, users.getTotalPages());
 			return map;
 		}
 		
@@ -217,7 +222,7 @@ public class UserController {
 	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getAllUsers(@RequestParam int page) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		Page<User> users = userRepository.findAll(new PageRequest(page-1, Constant.Page_Size));
 		if (users != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
@@ -226,9 +231,10 @@ public class UserController {
 				objects.add(user.toMap());
 			}
 			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, users.getTotalPages());
 			return map;
 		}
-		
+
 		map.put(Constant.Status, Constant.User_Not_Found);
 		return map;
 	}
@@ -252,7 +258,7 @@ public class UserController {
 			map.put(Constant.Status, Constant.Wrong_Password);
 			return map;
 		}
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute(Constant.Name, user.getName());
 		session.setAttribute(Constant.Phone, user.getPhone());
@@ -268,6 +274,11 @@ public class UserController {
 	public @ResponseBody Map<String, Object> logout(HttpServletRequest request){	
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		if (request.getSession().getAttribute(Constant.Phone) == null) {
+			map.put(Constant.Status, Constant.Not_Login);
+			return map;
+		}
+
 		request.getSession().removeAttribute(Constant.Name);
 		request.getSession().removeAttribute(Constant.Phone);
 		request.getSession().removeAttribute(Constant.IsAdmin);

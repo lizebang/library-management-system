@@ -1,6 +1,8 @@
 package com.library.server.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,7 +107,12 @@ public class BookController {
 		Page<Book> books = bookRepository.findByAuthor(author, new PageRequest(page-1, Constant.Page_Size));
 		if (books != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, books);
+			List<Object> objects = new ArrayList<Object>();
+			for (Book book : books) {
+				objects.add(book.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, books.getTotalPages());
 			return map;
 		}
 
@@ -120,7 +127,12 @@ public class BookController {
 		Page<Book> books = bookRepository.findByTag(tag, new PageRequest(page-1, Constant.Page_Size));
 		if (books != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, books);
+			List<Object> objects = new ArrayList<Object>();
+			for (Book book : books) {
+				objects.add(book.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, books.getTotalPages());
 			return map;
 		}
 
@@ -135,7 +147,12 @@ public class BookController {
 		Page<Book> books = bookRepository.findByKeyword(keyword, new PageRequest(page-1, Constant.Page_Size));
 		if (books != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, books);
+			List<Object> objects = new ArrayList<Object>();
+			for (Book book : books) {
+				objects.add(book.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, books.getTotalPages());
 			return map;
 		}
 	
@@ -150,7 +167,12 @@ public class BookController {
 		Page<Book> books = bookRepository.findFuzzy(keyword, new PageRequest(page-1, Constant.Page_Size));
 		if (books != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, books);
+			List<Object> objects = new ArrayList<Object>();
+			for (Book book : books) {
+				objects.add(book.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, books.getTotalPages());
 			return map;
 		}
 	
@@ -158,17 +180,22 @@ public class BookController {
 		return map;
 	}
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getAllBooks() {
+	@RequestMapping(value = "/all", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getAllBooks(@RequestParam Integer page) {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
-		Iterable<Book> books = bookRepository.findAll();
+		Page<Book> books = bookRepository.findAll(new PageRequest(page-1, Constant.Page_Size));
 		if (books != null) {
 			map.put(Constant.Status, Constant.HTTP_OK);
-			map.put(Constant.Body, books);
+			List<Object> objects = new ArrayList<Object>();
+			for (Book book : books) {
+				objects.add(book.toMap());
+			}
+			map.put(Constant.Body, objects);
+			map.put(Constant.TotalPages, books.getTotalPages());
 			return map;
 		}
-	
+
 		map.put(Constant.Status, Constant.Book_Not_Found);
 		return map;
 	}

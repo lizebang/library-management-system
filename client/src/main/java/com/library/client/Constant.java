@@ -2,6 +2,9 @@ package com.library.client;
 
 public class Constant {
 
+	public final static String BorrowBook = "借 书";
+	public final static String ReturnBook = "还 书";
+
 	// ResponseBody
 	public final static String Status = "status";
 	public final static String Body = "body";
@@ -17,22 +20,13 @@ public class Constant {
 	public final static Integer SexMale = 1;
 	public final static Integer SexFemale = 2;
 
-	public final static String getSex(Integer sex) {
-		if (sex.equals(SexMale)) {
-			return "男";
-		}
-		if (sex.equals(SexFemale)) {
-			return "女";
-		}
-		return "保密";
-	}
-
 	// Is Admin
 	public final static Integer NormalUser = 1;
 	public final static Integer AdminUser = 2;
 
 	// DB
-	public final static Integer Page_Size = 10;
+	public final static Integer Page_Size = 38;
+	public final static String TotalPages = "TotalPages";
 
 	// Max Margin
 	public final static Integer Max_Margin = 15;

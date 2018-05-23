@@ -25,7 +25,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
     private String title;
     private User user;
-    private JComboBox typeJComboBox=new JComboBox();
+    private JComboBox typeJComboBox = new JComboBox();
     private JLabel usernameJLabel = new JLabel();
     private JLabel sexJLabel = new JLabel();
     private JLabel phoneJLabel = new JLabel();
@@ -37,6 +37,9 @@ public class AdminPage extends JFrame implements ActionListener {
     private JButton exitJButton = new JButton("退出系统");
     private JTextField searchJTextField = new JTextField(50);
     private JButton searchJButton = new JButton("搜 索");
+    private JButton addBookJButton = new JButton("添加书籍");
+    private JPanel refreshJPanel = new JPanel();
+    private JButton refreshJButton = new JButton("刷 新");
     private JPanel bookSearchSelectJPanel = new JPanel();
     private ButtonGroup bookSearchButtonGroup = new ButtonGroup();
     private JRadioButton isbnJRadioButton = new JRadioButton("ISBN");
@@ -61,7 +64,7 @@ public class AdminPage extends JFrame implements ActionListener {
         JPanel usernameAndSexJPanel = new JPanel();
         usernameJLabel.setText("姓名: " + user.getName());
         usernameAndSexJPanel.add(usernameJLabel);
-        sexJLabel.setText("性别: " + Constant.getSex(user.getSex()));
+        sexJLabel.setText("性别: " + User.getSex(user.getSex()));
         usernameAndSexJPanel.add(sexJLabel);
         usernameAndSexJPanel.setBackground(Color.LIGHT_GRAY);
         usernameAndSexJPanel.setBounds(25, 100, 250, 50);
@@ -75,7 +78,7 @@ public class AdminPage extends JFrame implements ActionListener {
         this.add(phoneJPanel);
 
         JPanel isAdminAndAmountJPanel = new JPanel();
-        isAdminJLabel.setText("账号类型: 管理员");
+        isAdminJLabel.setText("账号类型: " + User.getIsAdmin(user.getIsAdmin()));
         isAdminAndAmountJPanel.add(isAdminJLabel);
         amountJLabel.setText("已借: " + user.getAmount());
         isAdminAndAmountJPanel.add(amountJLabel);
@@ -124,6 +127,7 @@ public class AdminPage extends JFrame implements ActionListener {
         JPanel searchJPanel = new JPanel();
         searchJPanel.add(searchJTextField);
         searchJPanel.add(searchJButton);
+        searchJPanel.add(addBookJButton);
         searchJPanel.setBounds(325, 40, 1140, 30);
         this.add(searchJPanel);
 
@@ -154,6 +158,11 @@ public class AdminPage extends JFrame implements ActionListener {
         userSearchSelectJPanel.setBounds(325, 80, 1140, 30);
         this.add(userSearchSelectJPanel);
 
+        refreshJPanel.add(refreshJButton);
+        refreshJPanel.setBounds(1300, 100, 100, 50);
+        refreshJPanel.setVisible(false);
+        this.add(refreshJPanel);
+
         JPanel rightUpJPanel = new JPanel();
         rightUpJPanel.setBounds(300, 0, 1140, 150);
         this.add(rightUpJPanel);
@@ -169,6 +178,11 @@ public class AdminPage extends JFrame implements ActionListener {
 
         typeJComboBox.addActionListener(this);
 
+        changeInfoJButton.addActionListener(this);
+        logoutJButton.addActionListener(this);
+        exitJButton.addActionListener(this);
+        addBookJButton.addActionListener(this);
+
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -179,13 +193,25 @@ public class AdminPage extends JFrame implements ActionListener {
             new UserInfoPage(title, user, usernameJLabel, sexJLabel, phoneJLabel);
         }
 
+        if (event.getSource() == logoutJButton) {
+            new LoginPage(title);
+            this.dispose();
+        }
+
+        if (event.getSource() == exitJButton) {
+            this.dispose();
+            System.exit(0);
+        }
+
         if (typeJComboBox.getSelectedIndex() == 0) {
             userSearchSelectJPanel.setVisible(true);
             bookSearchSelectJPanel.setVisible(false);
+            refreshJPanel.setVisible(false);
         }
         if (typeJComboBox.getSelectedIndex() == 1) {
             userSearchSelectJPanel.setVisible(false);
             bookSearchSelectJPanel.setVisible(true);
+            refreshJPanel.setVisible(true);
         }
     }
 }

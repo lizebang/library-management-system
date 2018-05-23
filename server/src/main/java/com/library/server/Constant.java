@@ -29,7 +29,8 @@ public class Constant {
 	public final static Integer AdminUser = 2;
 
 	// DB
-	public final static Integer Page_Size = 10;
+	public final static Integer Page_Size = 38;
+	public final static String TotalPages = "TotalPages";
 
 	// Max Margin
 	public final static Integer Max_Margin = 15;

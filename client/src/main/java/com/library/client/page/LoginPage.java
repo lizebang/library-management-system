@@ -89,14 +89,11 @@ public class LoginPage extends JFrame implements ActionListener {
                         new AdminPage(title, user);
                         this.dispose();
                     }
-                }
-                catch (LibraryException exception) {
+                } catch (LibraryException exception) {
                     JOptionPane.showMessageDialog(null, MessageDialog.LoginFail, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                }
-                catch (JSONException exception) {
+                } catch (JSONException exception) {
                     JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                }
-                catch (IOException exception) {
+                } catch (IOException exception) {
                     JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                 }
             }

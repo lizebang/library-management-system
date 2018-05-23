@@ -77,17 +77,14 @@ public class ResetPage extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, MessageDialog.ResetSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
                     new LoginPage(title);
                     this.dispose();
-                }
-                catch (LibraryException exception) {
+                } catch (LibraryException exception) {
                     Integer status = exception.getStatus();
                     if (status.equals(Constant.User_Not_Found)) {
                         JOptionPane.showMessageDialog(null, MessageDialog.InvalidInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                catch (JSONException exception) {
+                } catch (JSONException exception) {
                     JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                }
-                catch (IOException exception) {
+                } catch (IOException exception) {
                     JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                 }
             }

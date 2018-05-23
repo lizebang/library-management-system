@@ -21,7 +21,7 @@ import com.library.client.util.LibraryException;
 import com.library.client.util.Util;
 import com.library.client.util.Checker;
 
-public class RegisterPage extends JFrame implements ActionListener {
+public class AddBook extends JFrame implements ActionListener {
 
     private String title;
     private JLabel usernameJLabel = new JLabel("姓名");
@@ -38,7 +38,7 @@ public class RegisterPage extends JFrame implements ActionListener {
     private JButton registerJButton = new JButton("注册");
     private JButton returnJButton = new JButton("返回");
    
-    public RegisterPage(String title) {
+    public AddBook(String title) {
         super(title);
         this.title = title;
         this.setSize(1440, 900);

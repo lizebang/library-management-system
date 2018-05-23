@@ -3,7 +3,11 @@ package com.library.client.models;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.library.client.Constant;
+
 public class User {
+
+	private Integer totalPages;
 
 	private Long id;
 	public final static String UserId = "id";
@@ -35,6 +39,35 @@ public class User {
 		this.phone = phone;
 		this.isAdmin = isAdmin;
 		this.amount = amount;
+	}
+
+	public Object[] toObject() {
+		return new Object[]{this.id, this.name, getSex(this.sex), this.phone, getIsAdmin(this.isAdmin), this.amount, this.phone};
+	}
+
+	public final static String getSex(Integer sex) {
+		if (sex.equals(Constant.SexMale)) {
+			return "男";
+		}
+		if (sex.equals(Constant.SexFemale)) {
+			return "女";
+		}
+		return "保密";
+	}
+
+	public final static String getIsAdmin(Integer isAdmin) {
+		if (isAdmin.equals(Constant.AdminUser)) {
+			return "管理员";
+		}
+		return "普通用户";
+	}
+
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public Long getId() {

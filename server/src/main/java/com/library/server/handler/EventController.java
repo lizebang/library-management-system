@@ -1,11 +1,15 @@
 package com.library.server.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -92,5 +96,33 @@ public class EventController {
         
         map.put(Constant.Status, Constant.HTTP_OK);
         return map;
+    }
+
+    @RequestMapping(value = "/getbyphone", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> getByPhone(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        String phone = (String)request.getSession().getAttribute(Constant.Phone);
+        if (phone == null) {
+            map.put(Constant.Status, Constant.Not_Login);
+            return map;
+        }
+        
+        Integer amount = (Integer)request.getSession().getAttribute(Constant.Amount);
+
+        Page<Event> events = eventRepository.findUserByPhone(phone, new PageRequest(0, Constant.Page_Size));       
+        if (events != null) {
+			map.put(Constant.Status, Constant.HTTP_OK);
+			List<Object> objects = new ArrayList<Object>();
+			for (Event event : events) {
+				objects.add(event.toMap());
+			}
+			map.put(Constant.Body, objects);
+            map.put(Constant.TotalPages, events.getTotalPages());
+			return map;
+        }
+
+		map.put(Constant.Status, Constant.User_Not_Found);
+		return map;
     }
 }

@@ -169,11 +169,10 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         usernameUP.removeAll();
                         usernameUP.setText("姓名: " + username);
                         sexUP.removeAll();
-                        sexUP.setText("性别: " + Constant.getSex(sex));
+                        sexUP.setText("性别: " + User.getSex(sex));
                         JOptionPane.showMessageDialog(null, MessageDialog.ChangeInformationSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
                         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    }
-                    catch (LibraryException exception) {
+                    } catch (LibraryException exception) {
                         Integer status = exception.getStatus();
                         if (status.equals(Constant.Bad_Request)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.InvalidInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
@@ -181,11 +180,9 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         if (status.equals(Constant.Not_Login)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    catch (JSONException exception) {
+                    } catch (JSONException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    }
-                    catch (IOException exception) {
+                    } catch (IOException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -203,8 +200,7 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         phoneUP.setText("手机号: " + newPhone);
                         JOptionPane.showMessageDialog(null, MessageDialog.ChangePhoneSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
                         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    }
-                    catch (LibraryException exception) {
+                    } catch (LibraryException exception) {
                         Integer status = exception.getStatus();
                         if (status.equals(Constant.Bad_Request)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.InvalidInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
@@ -215,11 +211,9 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         if (status.equals(Constant.Not_Login)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    catch (JSONException exception) {
+                    } catch (JSONException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    }
-                    catch (IOException exception) {
+                    } catch (IOException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -233,8 +227,7 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         Util.changePassword(oldPassword, newPassword);
                         JOptionPane.showMessageDialog(null, MessageDialog.ChangePasswordSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
                         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    }
-                    catch (LibraryException exception) {
+                    } catch (LibraryException exception) {
                         Integer status = exception.getStatus();
                         if (status.equals(Constant.Wrong_Password)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.InvalidPassword, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
@@ -242,11 +235,9 @@ public class UserInfoPage extends JFrame implements ActionListener {
                         if (status.equals(Constant.Not_Login)) {
                             JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    catch (JSONException exception) {
+                    } catch (JSONException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    }
-                    catch (IOException exception) {
+                    } catch (IOException exception) {
                         JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
                 }

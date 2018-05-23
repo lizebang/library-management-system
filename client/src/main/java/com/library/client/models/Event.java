@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Event {
 
+	private Integer totalPages;
+
 	private Long id;
 	public final static String EventId = "id";
 
@@ -26,12 +28,25 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(String phone, String isbn, String name, String tag, String author) {
+	public Event(Long id, String phone, String isbn, String name, String tag, String author) {
+		this.id = id;
 		this.phone = phone;
 		this.isbn = isbn;
 		this.name = name;
 		this.tag = tag;
 		this.author = author;
+	}
+
+	public Object[] toObject() {
+		return new Object[]{this.id, this.isbn, this.name, this.tag, this.author, this.isbn};
+	}
+
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public Long getId() {

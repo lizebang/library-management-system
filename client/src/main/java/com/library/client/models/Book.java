@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Book {
 
+	private Integer totalPages;
+
 	private Long id;
 	public final static String BookId = "id";
 
@@ -45,6 +47,18 @@ public class Book {
 		this.introduction = introduction;
 		this.amount = amount;
 		this.inventory = inventory;
+	}
+
+	public Object[] toObject() {
+		return new Object[]{this.id, this.isbn, this.name, this.tag, this.author, this.amount, this.inventory, this.introduction, this.isbn};
+	}
+
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
 	}
 	
 	public void setId(Long id) {

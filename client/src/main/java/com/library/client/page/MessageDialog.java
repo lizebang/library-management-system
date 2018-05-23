@@ -20,6 +20,9 @@ public class MessageDialog {
     public final static String PhoneRepeated = "手机号已被占用";
     public final static String LoginFail = "用户名或密码错误";
     public final static String NotLogin = "未登陆，请先登陆";
+    public final static String PermissionDenied = "权限不足，请使用管理员账号登陆";
+    public final static String NumberFormatFail = "请正确输入跳转页数";
+    public final static String AlreadyFirstPage = "已经是第一页";
 
     // Error
     public final static String JSONError = "JSON 错误";
