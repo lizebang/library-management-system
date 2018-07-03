@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,9 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
 import org.json.JSONException;
-
 import com.library.client.Constant;
 import com.library.client.models.User;
 import com.library.client.util.LibraryException;
@@ -36,7 +33,7 @@ public class UserInfoPage extends JFrame implements ActionListener {
     private JPanel phoneJPanel = new JPanel();
     private JPanel oldPasswordJPanel = new JPanel();
     private JPanel newPasswordJPanel = new JPanel();
-    private JComboBox typeJComboBox=new JComboBox();
+    private JComboBox typeJComboBox = new JComboBox();
     private JLabel changeJLabel = new JLabel("更改内容");
     private JLabel usernameJLabel = new JLabel("新姓名");
     private JTextField usernameJTextField = new JTextField(12);
@@ -128,14 +125,14 @@ public class UserInfoPage extends JFrame implements ActionListener {
         buttonJPanel.add(confirmJButton);
         buttonJPanel.setBounds(75, 165, 250, 30);
         this.add(buttonJPanel);
-        
+
 
         JPanel endJPanel = new JPanel();
         this.add(endJPanel);
 
         confirmJButton.addActionListener(this);
         typeJComboBox.addActionListener(this);
-        
+
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -161,87 +158,110 @@ public class UserInfoPage extends JFrame implements ActionListener {
         if (event.getSource() == confirmJButton) {
             switch (typeJComboBox.getSelectedIndex()) {
                 case 0:
-                if (username.equals("") || sex == -1) {
-                    JOptionPane.showMessageDialog(null, MessageDialog.IncompleteInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                } else {
-                    try {
-                        Util.changeInfo(username, String.valueOf(sex));
-                        usernameUP.removeAll();
-                        usernameUP.setText("姓名: " + username);
-                        sexUP.removeAll();
-                        sexUP.setText("性别: " + User.getSex(sex));
-                        JOptionPane.showMessageDialog(null, MessageDialog.ChangeInformationSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
-                        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    } catch (LibraryException exception) {
-                        Integer status = exception.getStatus();
-                        if (status.equals(Constant.Bad_Request)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.InvalidInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    if (username.equals("") || sex == -1) {
+                        JOptionPane.showMessageDialog(null, MessageDialog.IncompleteInformation,
+                                MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        try {
+                            Util.changeInfo(username, String.valueOf(sex));
+                            usernameUP.removeAll();
+                            usernameUP.setText("姓名: " + username);
+                            sexUP.removeAll();
+                            sexUP.setText("性别: " + User.getSex(sex));
+                            JOptionPane.showMessageDialog(null,
+                                    MessageDialog.ChangeInformationSuccess, MessageDialog.Success,
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        } catch (LibraryException exception) {
+                            Integer status = exception.getStatus();
+                            if (status.equals(Constant.Bad_Request)) {
+                                JOptionPane.showMessageDialog(null,
+                                        MessageDialog.InvalidInformation, MessageDialog.Fail,
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            if (status.equals(Constant.Not_Login)) {
+                                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin,
+                                        MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (JSONException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                        } catch (IOException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                         }
-                        if (status.equals(Constant.Not_Login)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                        }
-                    } catch (JSONException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                break;
-                
+                    break;
+
                 case 1:
-                if (newPhone.equals("")) {
-                    JOptionPane.showMessageDialog(null, MessageDialog.InvalidPhone, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                } else if (!Checker.isPhone(newPhone)) {
-                    JOptionPane.showMessageDialog(null, MessageDialog.InvalidPhone, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                } else {
-                    try {
-                        Util.changePhone(newPhone);
-                        phoneUP.removeAll();
-                        phoneUP.setText("手机号: " + newPhone);
-                        JOptionPane.showMessageDialog(null, MessageDialog.ChangePhoneSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
-                        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    } catch (LibraryException exception) {
-                        Integer status = exception.getStatus();
-                        if (status.equals(Constant.Bad_Request)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.InvalidInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    if (newPhone.equals("")) {
+                        JOptionPane.showMessageDialog(null, MessageDialog.InvalidPhone,
+                                MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    } else if (!Checker.isPhone(newPhone)) {
+                        JOptionPane.showMessageDialog(null, MessageDialog.InvalidPhone,
+                                MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        try {
+                            Util.changePhone(newPhone);
+                            phoneUP.removeAll();
+                            phoneUP.setText("手机号: " + newPhone);
+                            JOptionPane.showMessageDialog(null, MessageDialog.ChangePhoneSuccess,
+                                    MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
+                            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        } catch (LibraryException exception) {
+                            Integer status = exception.getStatus();
+                            if (status.equals(Constant.Bad_Request)) {
+                                JOptionPane.showMessageDialog(null,
+                                        MessageDialog.InvalidInformation, MessageDialog.Fail,
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            if (status.equals(Constant.Repeated)) {
+                                JOptionPane.showMessageDialog(null, MessageDialog.PhoneRepeated,
+                                        MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                            }
+                            if (status.equals(Constant.Not_Login)) {
+                                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin,
+                                        MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (JSONException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                        } catch (IOException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                         }
-                        if (status.equals(Constant.Repeated)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.PhoneRepeated, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                        }
-                        if (status.equals(Constant.Not_Login)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                        }
-                    } catch (JSONException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                break;
-                
+                    break;
+
                 case 2:
-                if (oldPassword.equals("") || newPassword.equals("")) {
-                    JOptionPane.showMessageDialog(null, MessageDialog.IncompleteInformation, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                } else {
-                    try {
-                        Util.changePassword(oldPassword, newPassword);
-                        JOptionPane.showMessageDialog(null, MessageDialog.ChangePasswordSuccess, MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
-                        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    } catch (LibraryException exception) {
-                        Integer status = exception.getStatus();
-                        if (status.equals(Constant.Wrong_Password)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.InvalidPassword, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    if (oldPassword.equals("") || newPassword.equals("")) {
+                        JOptionPane.showMessageDialog(null, MessageDialog.IncompleteInformation,
+                                MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        try {
+                            Util.changePassword(oldPassword, newPassword);
+                            JOptionPane.showMessageDialog(null, MessageDialog.ChangePasswordSuccess,
+                                    MessageDialog.Success, JOptionPane.INFORMATION_MESSAGE);
+                            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        } catch (LibraryException exception) {
+                            Integer status = exception.getStatus();
+                            if (status.equals(Constant.Wrong_Password)) {
+                                JOptionPane.showMessageDialog(null, MessageDialog.InvalidPassword,
+                                        MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                            }
+                            if (status.equals(Constant.Not_Login)) {
+                                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin,
+                                        MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (JSONException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                        } catch (IOException exception) {
+                            JOptionPane.showMessageDialog(null, exception.toString(),
+                                    MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                         }
-                        if (status.equals(Constant.Not_Login)) {
-                            JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
-                        }
-                    } catch (JSONException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
-                    } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                break;
+                    break;
             }
         }
 

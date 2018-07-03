@@ -3,7 +3,6 @@ package com.library.client.page;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,9 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
 import org.json.JSONException;
-
 import com.library.client.Constant;
 import com.library.client.models.User;
 import com.library.client.util.LibraryException;
@@ -54,13 +51,13 @@ public class AdminPage extends JFrame implements ActionListener {
     private JRadioButton phoneJRadioButton = new JRadioButton("手机号");
     private JRadioButton userKeywordJRadioButton = new JRadioButton("关键字");
     private JRadioButton userFuzzyJRadioButton = new JRadioButton("模糊查询");
-   
+
     public AdminPage(String title, User user) {
         super(title);
         this.title = title;
         this.user = user;
         this.setBounds(0, 0, 1440, 900);
-        
+
         JPanel usernameAndSexJPanel = new JPanel();
         usernameJLabel.setText("姓名: " + user.getName());
         usernameAndSexJPanel.add(usernameJLabel);
@@ -115,7 +112,7 @@ public class AdminPage extends JFrame implements ActionListener {
         leftJPanel.setBounds(0, 0, 300, 900);
         this.add(leftJPanel);
 
-// --------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------
 
         JPanel typeJPanel = new JPanel();
         typeJComboBox.addItem("管理用户");
@@ -167,14 +164,14 @@ public class AdminPage extends JFrame implements ActionListener {
         rightUpJPanel.setBounds(300, 0, 1140, 150);
         this.add(rightUpJPanel);
 
-// --------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------
 
         JPanel rightDownJPanel = new JPanel();
         rightDownJPanel.setBackground(Color.WHITE);
         rightDownJPanel.setBounds(300, 150, 1140, 750);
         this.add(rightDownJPanel);
 
-// --------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------
 
         typeJComboBox.addActionListener(this);
 

@@ -9,8 +9,8 @@ public class LibraryException extends Exception {
     }
 
     public Integer getStatus() {
-		return status;
-	}
+        return status;
+    }
 
     public String toString() {
         return String.format("Status: %d", status);

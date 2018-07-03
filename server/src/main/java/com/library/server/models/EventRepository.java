@@ -14,5 +14,5 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     @Query("DELETE FROM Event WHERE phone = ?1 AND isbn = ?2")
     void deleteByPhoneAndIsbn(String phone, String isbn);
 
-	Page<Event> findUserByPhone(String phone, Pageable page);
+    Page<Event> findUserByPhone(String phone, Pageable page);
 }

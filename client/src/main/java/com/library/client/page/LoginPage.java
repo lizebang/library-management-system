@@ -3,7 +3,6 @@ package com.library.client.page;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,9 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import org.json.JSONException;
-
 import com.library.client.util.LibraryException;
 import com.library.client.util.Checker;
 import com.library.client.util.Util;
@@ -30,7 +27,7 @@ public class LoginPage extends JFrame implements ActionListener {
     private JButton loginJButton = new JButton("登陆");
     private JButton registerJButton = new JButton("用户注册");
     private JButton resetJButton = new JButton("重置密码");
-   
+
     public LoginPage(String title) {
         super(title);
         this.title = title;
@@ -43,7 +40,7 @@ public class LoginPage extends JFrame implements ActionListener {
         upJPanel.add(registerJButton);
         upJPanel.setBounds(470, 350, 500, 50);
         this.add(upJPanel);
-        
+
         JPanel downJPanel = new JPanel();
         downJPanel.add(passwordJLabel);
         downJPanel.add(passwordJPasswordField);
@@ -62,7 +59,7 @@ public class LoginPage extends JFrame implements ActionListener {
         loginJButton.addActionListener(this);
         registerJButton.addActionListener(this);
         resetJButton.addActionListener(this);
-        
+
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -74,11 +71,12 @@ public class LoginPage extends JFrame implements ActionListener {
 
         if (event.getSource() == loginJButton) {
             if (!Checker.isPhone(username)) {
-                JOptionPane.showMessageDialog(null, MessageDialog.InvalidName, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.InvalidName, MessageDialog.Fail,
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     User user = Util.login(username, password);
-                    
+
                     Integer isAdmin = user.getIsAdmin();
                     if (isAdmin.equals(Constant.NormalUser)) {
                         new UserPage(title, user);
@@ -90,11 +88,14 @@ public class LoginPage extends JFrame implements ActionListener {
                         this.dispose();
                     }
                 } catch (LibraryException exception) {
-                    JOptionPane.showMessageDialog(null, MessageDialog.LoginFail, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.LoginFail, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

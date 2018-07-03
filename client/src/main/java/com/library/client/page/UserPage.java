@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,9 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import org.json.JSONException;
-
 import com.library.client.Constant;
 import com.library.client.models.Book;
 import com.library.client.models.Event;
@@ -55,7 +52,7 @@ public class UserPage extends JFrame implements ActionListener {
 
     private int page;
     private int totalPages;
-    
+
     private JPanel bookJPanel = new JPanel();
     private JScrollPane bookJScrollPane = new JScrollPane();
     private JTable bookJTable;
@@ -103,7 +100,7 @@ public class UserPage extends JFrame implements ActionListener {
         }
 
         @Override
-        public void setValueAt(Object value, int row, int column){
+        public void setValueAt(Object value, int row, int column) {
             events[row][column] = value;
             fireTableCellUpdated(row, column);
         }
@@ -113,7 +110,7 @@ public class UserPage extends JFrame implements ActionListener {
             if (column == 5) {
                 return true;
             } else {
-        return false;
+                return false;
             }
         }
     };
@@ -129,7 +126,7 @@ public class UserPage extends JFrame implements ActionListener {
         this.title = title;
         this.user = user;
         this.setBounds(0, 0, 1440, 900);
-        
+
         JPanel usernameAndSexJPanel = new JPanel();
         usernameJLabel.setText("姓名: " + user.getName());
         usernameAndSexJPanel.add(usernameJLabel);
@@ -190,9 +187,9 @@ public class UserPage extends JFrame implements ActionListener {
         leftJPanel.setBounds(0, 0, 300, 900);
         this.add(leftJPanel);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         JPanel searchJPanel = new JPanel();
         searchJPanel.add(searchJTextField);
@@ -223,9 +220,9 @@ public class UserPage extends JFrame implements ActionListener {
         rightUpJPanel.setBounds(300, 0, 1140, 150);
         this.add(rightUpJPanel);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         try {
             this.page = 1;
@@ -256,17 +253,20 @@ public class UserPage extends JFrame implements ActionListener {
         bookJPanel.add(bookJScrollPane);
 
 
-        bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+        bookDefaultTableModel.setDataVector(books,
+                new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
         bookJTable = new JTable(bookDefaultTableModel);
         bookJScrollPane.setViewportView(bookJTable);
-        bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-        bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+        bookJTable.getColumnModel().getColumn(8)
+                .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+        bookJTable.getColumnModel().getColumn(8)
+                .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
 
         bookJTable.setRowSelectionAllowed(false);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         eventJPanel.setBackground(Color.WHITE);
         eventJPanel.setBounds(300, 150, 1140, 649);
@@ -277,11 +277,14 @@ public class UserPage extends JFrame implements ActionListener {
         eventJScrollPane.setBounds(20, 20, 1100, 630);
         eventJPanel.add(eventJScrollPane);
 
-        eventDefaultTableModel.setDataVector(events, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "操作"});
+        eventDefaultTableModel.setDataVector(events,
+                new Object[] {"ID", "ISBN", "书名", "作者", "标签", "操作"});
         eventJTable = new JTable(eventDefaultTableModel);
         eventJScrollPane.setViewportView(eventJTable);
-        eventJTable.getColumnModel().getColumn(5).setCellEditor(new BookButtonEditor(eventJTable, Constant.ReturnBook));
-        eventJTable.getColumnModel().getColumn(5).setCellRenderer(new BookButtonRenderer(Constant.ReturnBook));
+        eventJTable.getColumnModel().getColumn(5)
+                .setCellEditor(new BookButtonEditor(eventJTable, Constant.ReturnBook));
+        eventJTable.getColumnModel().getColumn(5)
+                .setCellRenderer(new BookButtonRenderer(Constant.ReturnBook));
 
         eventJTable.setRowSelectionAllowed(false);
 
@@ -306,15 +309,15 @@ public class UserPage extends JFrame implements ActionListener {
         JPanel endJPanel = new JPanel();
         this.add(endJPanel);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         changeInfoJButton.addActionListener(this);
         logoutJButton.addActionListener(this);
         exitJButton.addActionListener(this);
-        
+
         viewBookedJButton.addActionListener(this);
         searchPanelJButton.addActionListener(this);
 
@@ -343,11 +346,14 @@ public class UserPage extends JFrame implements ActionListener {
             try {
                 Util.logout();
             } catch (LibraryException exception) {
-                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (JSONException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (IOException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                        JOptionPane.ERROR_MESSAGE);
             }
             new LoginPage(title);
             this.dispose();
@@ -357,11 +363,14 @@ public class UserPage extends JFrame implements ActionListener {
             try {
                 Util.logout();
             } catch (LibraryException exception) {
-                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (JSONException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (IOException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                        JOptionPane.ERROR_MESSAGE);
             }
             this.dispose();
             System.exit(0);
@@ -380,22 +389,28 @@ public class UserPage extends JFrame implements ActionListener {
                 totalPagesJLabel.setText(String.format("/%d", 1));
 
                 eventJScrollPane.remove(eventJTable);
-                eventDefaultTableModel.setDataVector(events, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "操作"});
+                eventDefaultTableModel.setDataVector(events,
+                        new Object[] {"ID", "ISBN", "书名", "作者", "标签", "操作"});
                 eventJTable = new JTable(eventDefaultTableModel);
                 eventJScrollPane.setViewportView(eventJTable);
-                eventJTable.getColumnModel().getColumn(5).setCellEditor(new BookButtonEditor(eventJTable, Constant.ReturnBook));
-                eventJTable.getColumnModel().getColumn(5).setCellRenderer(new BookButtonRenderer(Constant.ReturnBook));
-        
+                eventJTable.getColumnModel().getColumn(5)
+                        .setCellEditor(new BookButtonEditor(eventJTable, Constant.ReturnBook));
+                eventJTable.getColumnModel().getColumn(5)
+                        .setCellRenderer(new BookButtonRenderer(Constant.ReturnBook));
+
                 eventJTable.setRowSelectionAllowed(false);
 
                 bookJPanel.setVisible(false);
                 eventJPanel.setVisible(true);
             } catch (LibraryException exception) {
-                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (JSONException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError,
+                        JOptionPane.ERROR_MESSAGE);
             } catch (IOException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -415,30 +430,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -449,31 +470,37 @@ public class UserPage extends JFrame implements ActionListener {
                     this.totalPages = 1;
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[1][];
                     books[0] = b.toObject();
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             if (authorJRadioButton.isSelected()) {
                 try {
                     Book[] bs = Util.getBookByAuthor(search, 1);
@@ -483,30 +510,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -519,30 +552,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -555,30 +594,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -591,30 +636,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -628,30 +679,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-        
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -662,31 +719,37 @@ public class UserPage extends JFrame implements ActionListener {
                     this.totalPages = 1;
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-    
+
                     books = new Object[1][];
                     books[0] = b.toObject();
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             if (authorJRadioButton.isSelected()) {
                 try {
                     Book[] bs = Util.getBookByAuthor(search, this.page);
@@ -695,30 +758,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -730,30 +799,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -765,30 +840,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -806,32 +887,39 @@ public class UserPage extends JFrame implements ActionListener {
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
 
         if (ae.getSource() == previousBookPageJButton) {
             if (page <= 1) {
-                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage, MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage,
+                        MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (search.isEmpty()) {
@@ -843,30 +931,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
 
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -877,31 +971,37 @@ public class UserPage extends JFrame implements ActionListener {
                     this.totalPages = 1;
                     goToJTextField.setText(String.valueOf(1));
                     totalPagesJLabel.setText(String.format("/%d", 1));
-     
+
                     books = new Object[1][];
                     books[0] = b.toObject();
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
 
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             if (authorJRadioButton.isSelected()) {
                 try {
                     Book[] bs = Util.getBookByAuthor(search, page - 1);
@@ -911,30 +1011,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -947,30 +1053,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -988,25 +1100,31 @@ public class UserPage extends JFrame implements ActionListener {
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1019,37 +1137,44 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
 
         if (ae.getSource() == nextBookPageJButton) {
             if (page >= totalPages) {
-                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage, MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage,
+                        MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (search.isEmpty()) {
@@ -1061,30 +1186,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1098,28 +1229,34 @@ public class UserPage extends JFrame implements ActionListener {
 
                     books = new Object[1][];
                     books[0] = b.toObject();
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             if (authorJRadioButton.isSelected()) {
                 try {
                     Book[] bs = Util.getBookByAuthor(search, page + 1);
@@ -1129,30 +1266,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1165,30 +1308,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1201,30 +1350,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1237,30 +1392,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1270,11 +1431,13 @@ public class UserPage extends JFrame implements ActionListener {
             try {
                 goToPage = Integer.parseInt(goTo);
             } catch (NumberFormatException exception) {
-                JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.NumberFormatFail, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.toString(),
+                        MessageDialog.NumberFormatFail, JOptionPane.ERROR_MESSAGE);
             }
 
             if (page >= totalPages) {
-                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage, MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, MessageDialog.AlreadyFirstPage,
+                        MessageDialog.NumberFormatFail, JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (search.isEmpty()) {
@@ -1286,30 +1449,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1323,28 +1492,34 @@ public class UserPage extends JFrame implements ActionListener {
 
                     books = new Object[1][];
                     books[0] = b.toObject();
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             if (authorJRadioButton.isSelected()) {
                 try {
                     Book[] bs = Util.getBookByAuthor(search, goToPage);
@@ -1354,30 +1529,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1390,30 +1571,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1426,30 +1613,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -1462,30 +1655,36 @@ public class UserPage extends JFrame implements ActionListener {
                     }
                     goToJTextField.setText(String.valueOf(this.page));
                     totalPagesJLabel.setText(String.format("/%d", this.totalPages));
-    
+
                     books = new Object[bs.length][];
                     for (int i = 0; i < bs.length; i++) {
                         books[i] = bs[i].toObject();
                     }
-    
+
                     bookJScrollPane.remove(bookJTable);
-                    bookDefaultTableModel.setDataVector(books, new Object[]{"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
+                    bookDefaultTableModel.setDataVector(books,
+                            new Object[] {"ID", "ISBN", "书名", "作者", "标签", "总数", "库存", "简介", "操作"});
                     bookJTable = new JTable(bookDefaultTableModel);
                     bookJScrollPane.setViewportView(bookJTable);
-                    bookJTable.getColumnModel().getColumn(8).setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
-                    bookJTable.getColumnModel().getColumn(8).setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
-            
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellEditor(new BookButtonEditor(bookJTable, Constant.BorrowBook));
+                    bookJTable.getColumnModel().getColumn(8)
+                            .setCellRenderer(new BookButtonRenderer(Constant.BorrowBook));
+
                     bookJTable.setRowSelectionAllowed(false);
-    
+
                     eventJPanel.setVisible(false);
                     bookJPanel.setVisible(true);
                 } catch (LibraryException exception) {
                     // todo:
-                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, MessageDialog.NotLogin, MessageDialog.Fail,
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (JSONException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(),
+                            MessageDialog.JSONError, JOptionPane.ERROR_MESSAGE);
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.toString(), MessageDialog.IOError,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

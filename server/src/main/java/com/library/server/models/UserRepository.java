@@ -6,34 +6,33 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.library.server.models.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	
-	User findByPhone(String phone);
 
-	Page<User> findUserByName(String name, Pageable page);
+    User findByPhone(String phone);
 
-	Page<User> findAll(Pageable page);
+    Page<User> findUserByName(String name, Pageable page);
 
-	@Transactional
+    Page<User> findAll(Pageable page);
+
+    @Transactional
     @Modifying
     @Query("UPDATE User u SET u.amount = ?1 WHERE u.phone = ?2")
-	int updateAmount(Integer amount, String phone);
-	
-	@Transactional
+    int updateAmount(Integer amount, String phone);
+
+    @Transactional
     @Modifying
     @Query("UPDATE User u SET u.name = ?1, u.sex = ?2 WHERE u.phone = ?3")
-	int updateInfo(String name, Integer sex, String phone);
+    int updateInfo(String name, Integer sex, String phone);
 
-	@Transactional
+    @Transactional
     @Modifying
     @Query("UPDATE User u SET u.phone = ?1 WHERE u.phone = ?2")
-	int updatePhone(String newPhone, String oldPhone);
+    int updatePhone(String newPhone, String oldPhone);
 
-	@Transactional
+    @Transactional
     @Modifying
     @Query("UPDATE User u SET u.password = ?1 WHERE u.phone = ?2")
-	int updatePassword(String password, String phone);
+    int updatePassword(String password, String phone);
 }
